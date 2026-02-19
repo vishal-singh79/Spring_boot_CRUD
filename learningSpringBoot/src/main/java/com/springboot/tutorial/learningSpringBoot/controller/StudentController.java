@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-// @RestController: This class handles HTTP requests and returns JSON automatically
-// @RequestMapping: All endpoints in this class start with /api/students
 @RestController
 @RequestMapping("/api/students")
 public class StudentController {
@@ -20,25 +18,18 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    // ===== GET ALL STUDENTS =====
-    // URL: GET http://localhost:8080/api/students
     @GetMapping
     public ResponseEntity<List<Student>> getAllStudents() {
         List<Student> students = studentService.getAllStudents();
         return ResponseEntity.ok(students); // Returns 200 OK with the list
     }
 
-    // ===== GET STUDENT BY ID =====
-    // URL: GET http://localhost:8080/api/students/1
     @GetMapping("/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable Long id) {
-        // @PathVariable picks up the {id} value from the URL
         Student student = studentService.getStudentById(id);
         return ResponseEntity.ok(student); // 200 OK
     }
 
-    // ===== CREATE NEW STUDENT =====
-    // URL: POST http://localhost:8080/api/students
     @PostMapping
     public ResponseEntity<Student> createStudent(@Valid @RequestBody StudentDto studentDto) {
         // @RequestBody converts the JSON from the request into a StudentDto object
@@ -47,19 +38,16 @@ public class StudentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created); // 201 Created
     }
 
-    // ===== UPDATE STUDENT =====
-    // URL: PUT http://localhost:8080/api/students/1
     @PutMapping("/{id}")
     public ResponseEntity<Student> updateStudent(
             @PathVariable Long id,
             @Valid @RequestBody StudentDto studentDto) {
 
         Student updated = studentService.updateStudent(id, studentDto);
-        return ResponseEntity.ok(updated); // 200 OK
+        return ResponseEntity.ok(updated);
     }
 
-    // ===== DELETE STUDENT =====
-    // URL: DELETE http://localhost:8080/api/students/1
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);

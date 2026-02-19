@@ -8,18 +8,15 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-// @Entity tells Spring Boot that this class maps to a database table
 @Entity
-// @Table sets the actual table name in the database
+
 @Table(name = "students")
-// @Getter and @Setter are from Lombok — they automatically generate all getters and setters
-// So you don't need to write them manually!
+
 @Getter
 @Setter
 public class Student {
 
-    // @Id marks this as the primary key
-    // @GeneratedValue means the database will auto-generate the ID (1, 2, 3...)
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,7 +31,6 @@ public class Student {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    // unique = true means no two students can have the same email
     @NotBlank(message = "Email is required")
     @Email(message = "Please provide a valid email address")
     @Column(name = "email", nullable = false, unique = true)
@@ -55,14 +51,14 @@ public class Student {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // @PrePersist runs automatically BEFORE saving a NEW student to the database
+
     @PrePersist
     public void beforeSave() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
-    // @PreUpdate runs automatically BEFORE updating an EXISTING student
+
     @PreUpdate
     public void beforeUpdate() {
         this.updatedAt = LocalDateTime.now();

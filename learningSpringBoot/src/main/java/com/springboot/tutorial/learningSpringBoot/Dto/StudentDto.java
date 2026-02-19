@@ -6,9 +6,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
-// DTO = Data Transfer Object
-// This is what the user sends in the request body (JSON)
-// We validate the data here before it reaches the database
+
 @Getter
 @Setter
 public class StudentDto {
